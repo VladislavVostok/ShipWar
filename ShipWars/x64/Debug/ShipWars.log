@@ -1,0 +1,9 @@
+﻿  Board.cpp
+  Player.cpp
+  ShipWars.cpp
+  Создание кода...
+Board.obj : error LNK2005: "public: void __cdecl Board::placeShip(int,int,int,bool)" (?placeShip@Board@@QEAAXHHH_N@Z) уже определен в Player.obj
+ShipWars.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: __cdecl Board::Board(void)" (??0Board@@QEAA@XZ) в функции main.
+ShipWars.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl Board::display(bool)" (?display@Board@@QEAAX_N@Z) в функции main.
+ShipWars.obj : error LNK2019: ссылка на неразрешенный внешний символ "public: void __cdecl Player::placeShip(bool)" (?placeShip@Player@@QEAAX_N@Z) в функции main.
+C:\Users\Студент\Desktop\Владислав Александроич\ShipWars\x64\Debug\ShipWars.exe : fatal error LNK1120: неразрешенных внешних элементов: 3
