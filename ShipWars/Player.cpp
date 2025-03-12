@@ -3,6 +3,9 @@
 #include <cstdlib> // Для rand()
 #include <ctime>   // Для time()
 
+#if false
+    #include <tuple>   // tie(x,y)
+#endif
 Player::Player(const std::string& name, Board& board) : name(name), board(board) {}
 
 void Player::placeShip(bool manual) {
@@ -38,4 +41,74 @@ void Player::placeShip(bool manual) {
             board.placeShip(x, y, size, horizontal);
         }
     }
+}
+
+
+
+
+bool Player::takeTurn(Board& opponetnBoard, ComputerMode mode) {
+    int x, y;
+    static vector<pair<int, int>> targets;
+    if (name == "Computer") {       // Ход компьютера
+        if (mode == SMART) {        // Режим Smart стрельбы
+            if (!targets.empty()) {
+                tie(x, y) = targets.back();
+                targets.pop_back();
+            }
+            else {  
+                do {
+                    x = rand() % SIZE;
+                    y = rand() % SIZE;
+                } while (   opponetnBoard.isHit(x, y)
+                            || opponetnBoard.isMiss(x, y)
+                            || (x + y) % 2 != 0
+                  );
+
+            }
+        }
+        else {          // Режим случайной стрельбы
+            do {
+                x = rand() % SIZE;
+                y = rand() % SIZE;
+            } while (opponetnBoard.isHit(x, y) || opponetnBoard.isMiss(x, y));
+
+        }
+
+    }
+    else {    // Ход человека
+        cout << name << ", введите координаты для выстрела (x y): ";
+        cin >> x >> y;
+
+        while (x < 0 || x >= SIZE || y < 0 || y >= SIZE || opponetnBoard.isHit(x, y) || opponetnBoard.isMiss(x, y)) {
+            cout << "Некорректные координаты. Попробуйте ещё: ";
+            cin >> x >> y;
+        }
+    }
+
+    if (opponetnBoard.isShip(x, y)) {
+        cout << name << "попал по (" << x << ", " << y << ")!" << endl;
+        opponetnBoard.markHit(x, y);
+
+        if (x > 0 && !opponetnBoard.isHit(x - 1, y) && !opponetnBoard.isMiss(x - 1, y))
+            targets.emplace_back(x - 1, y);
+
+        if (x < SIZE - 1 && !opponetnBoard.isHit(x +1, y) && !opponetnBoard.isMiss(x + 1, y))
+            targets.emplace_back(x + 1, y);
+
+        if (y > 0 && !opponetnBoard.isHit(x, y - 1) && !opponetnBoard.isMiss(x, y - 1))
+            targets.emplace_back(x, y - 1);
+
+        if (y < SIZE - 1 && !opponetnBoard.isHit(x, y + 1) && !opponetnBoard.isMiss(x, y + 1))
+            targets.emplace_back(x, y + 1);
+
+        return true; // Успешный ход
+
+    }
+    else {
+        cout << name << ", промахнулся по (" << x << ", " << y << ")" << endl;
+        opponetnBoard.markMiss(x, y);
+        return false;   // неудачный ход
+    }
+
+
 }

@@ -13,14 +13,18 @@
 */
 
 #ifndef BOARD_HPP
+
 #define BOARD_HPP
+#define SIZE 10
+//#define loop for(;;)
+//#define loopw while(true)
 
 #include <vector>
 #include <iostream>
 
 enum CellState { EMPTY, SHIP, HIT, MISS };
 
-const int SIZE = 10;
+
 const int SHIP_SIZES[] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 }; // Размеры кораблей и их количество
 
 /*
@@ -62,6 +66,7 @@ public:
     bool isValidPlacement(int x, int y, int size, bool horizontal) const;
     bool isHit(int x, int y) const;
     bool isMiss(int x, int y) const;
+    bool isShip(int x, int y) const;
     void markHit(int x, int y);
     void markMiss(int x, int y);
     void display(bool showShips) const;

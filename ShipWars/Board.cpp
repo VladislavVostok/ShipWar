@@ -1,5 +1,7 @@
 #include "Board.hpp"
 
+
+
 Board::Board() {
     grid.resize(SIZE, std::vector<CellState>(SIZE, EMPTY));
 }
@@ -43,9 +45,16 @@ bool Board::isHit(int x, int y) const {
     return grid[x][y] == SHIP;
 }
 
+
 bool Board::isMiss(int x, int y) const {
     return grid[x][y] == MISS;
 }
+
+//TODO: Рефакторинг с isHit
+
+bool Board::isShip(int x, int y) const {
+    return grid[x][y] == SHIP;
+};
 
 void Board::markHit(int x, int y) {
     grid[x][y] = HIT;
@@ -83,5 +92,10 @@ bool Board::allShipSunk() const {
             if (grid[i][j] == SHIP) return false;
         }
     }
+
+
+
+
     return true;
 }
+

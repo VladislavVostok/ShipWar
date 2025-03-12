@@ -3,13 +3,15 @@
 #include "Board.hpp"
 #include "Player.hpp"
 
+
 using namespace std;
 
 const int NUM_SHIP = 10;	// Количество кораблей
 
 
 enum GameMode { HUMAN_VS_COMPUTER, COMPUTER_VS_COMPUTER };
-enum ComputerMode { RAMDOM, INTELLIGENT };
+
+
 
 // Структура для представления координат на поле.
 struct Point {
@@ -20,6 +22,7 @@ struct Point {
 
 int main()
 {
+	cout << SIZE;
 
 	string vasya = "Vasya";
 	Board b = Board();
