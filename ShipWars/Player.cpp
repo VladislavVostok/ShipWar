@@ -2,10 +2,10 @@
 #include <iostream>
 #include <cstdlib> // Для rand()
 #include <ctime>   // Для time()
+#include <tuple>   // tie(x,y)
 
-#if false
-    #include <tuple>   // tie(x,y)
-#endif
+
+
 Player::Player(const std::string& name, Board& board) : name(name), board(board) {}
 
 void Player::placeShip(bool manual) {
