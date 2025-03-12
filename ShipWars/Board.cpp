@@ -1,90 +1,87 @@
 #include "Board.hpp"
-#include <iostream>
 
-using namespace std;
-
-
-const int SIZE = 10;
-const int SHIP_SIZES[] = { 4, 3, 3, 2, 2, 2, 1, 1, 1, 1 };	// размеры кораблей и их количество
-
-inline Board::Board() {
-	grid.resize(SIZE, vector<CellState>(SIZE, EMPTY));
+Board::Board() {
+    grid.resize(SIZE, std::vector<CellState>(SIZE, EMPTY));
 }
-
 
 void Board::placeShip(int x, int y, int size, bool horizontal) {
-	for (int i = 0; i < size; ++i) {
-		if (horizontal) {
-			grid[x][y + i] = SHIP; // Горизонтальное размещение
-		}
-		else {
-			grid[x + i][y] = SHIP;
-		}
-	}
+    for (int i = 0; i < size; ++i) {
+        if (horizontal) {
+            grid[x][y + i] = SHIP; // Горизонтальное размещение
+        }
+        else {
+            grid[x + i][y] = SHIP; // Вертикальное размещение
+        }
+    }
 }
 
+bool Board::isValidPlacement(int x, int y, int size, bool horizontal) const {
+    for (int i = 0; i < size; ++i) {
+        int nx = x + (horizontal ? 0 : i);
+        int ny = y + (horizontal ? i : 0);
 
-inline bool Board::isValidPlacement(int x, int y, int size, bool horizontal) {
-	for (int i = 0; i < size; ++i) {
-		int nx = x + (horizontal ? 0 : i);
-		int ny = y + (horizontal ? i : 0);
+        // Проверка на выход за границы поля
+        if (nx >= SIZE || ny >= SIZE || grid[nx][ny] != EMPTY) {
+            return false;
+        }
 
-		// TODO: Добавить проверку что корабль от другого корабля долже находить дальше одной клетки.
-
-		if (nx >= SIZE || ny >= SIZE || grid[nx][ny] != EMPTY) {
-			return false;
-		}
-	}
-	return true;
+        // Проверка соседних клеток
+        for (int dx = -1; dx <= 1; ++dx) {
+            for (int dy = -1; dy <= 1; ++dy) {
+                int cx = nx + dx;
+                int cy = ny + dy;
+                if (cx >= 0 && cx < SIZE && cy >= 0 && cy < SIZE && grid[cx][cy] == SHIP) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
 }
 
-
-inline bool Board::isHit(int x, int y) {
-	return grid[x][y] == SHIP;
+bool Board::isHit(int x, int y) const {
+    return grid[x][y] == SHIP;
 }
 
-inline bool Board::isMiss(int x, int y) {
-	return grid[x][y] == MISS;
+bool Board::isMiss(int x, int y) const {
+    return grid[x][y] == MISS;
 }
 
-inline void Board::markHit(int x, int y) {
-	grid[x][y] = HIT;
+void Board::markHit(int x, int y) {
+    grid[x][y] = HIT;
 }
 
-inline void Board::markMiss(int x, int y) {
-	grid[x][y] = MISS;
+void Board::markMiss(int x, int y) {
+    grid[x][y] = MISS;
 }
 
-inline void Board::display(bool showShips) {
-	// Гозиротальная шака поля
-	cout << " ";
-	for (int i = 0; i < SIZE; ++i) {
-		cout << i << " ";
-	}
-	cout << endl;
+void Board::display(bool showShips) const {
+    // Горизонтальная шапка поля
+    std::cout << "  ";
+    for (int i = 0; i < SIZE; ++i) {
+        std::cout << i << " ";
+    }
+    std::cout << std::endl;
 
-	// Cтолбцы.
-	for (int i = 0; i < SIZE; ++i) {
-		cout << i << " ";
-		for (int j = 0; j < SIZE; ++j) {
-			if (grid[i][j] == HIT) cout << "X ";
-			else if (grid[i][j] == MISS) cout << "O ";
-			else if (showShips && grid[i][j] == SHIP) cout << "S ";
-			else cout << "* ";
-		}
-		cout << endl;
-	}
-	cout << endl;
+    // Строки и столбцы
+    for (int i = 0; i < SIZE; ++i) {
+        std::cout << i << " ";
+        for (int j = 0; j < SIZE; ++j) {
+            if (grid[i][j] == HIT) std::cout << "X ";
+            else if (grid[i][j] == MISS) std::cout << "O ";
+            else if (showShips && grid[i][j] == SHIP) std::cout << "S ";
+            else std::cout << "~ "; // Используем "~" для обозначения воды
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 }
 
-
-inline bool Board::allShipSunk() {
-	for (int i = 0; i < SIZE; ++i) {
-		for (int j = 0; j < SIZE; ++j) {
-			if (grid[i][j] == SHIP) return false;
-		}
-	}
-	return true;
+bool Board::allShipSunk() const {
+    for (int i = 0; i < SIZE; ++i) {
+        for (int j = 0; j < SIZE; ++j) {
+            if (grid[i][j] == SHIP) return false;
+        }
+    }
+    return true;
 }
-
-

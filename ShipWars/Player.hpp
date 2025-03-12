@@ -1,16 +1,17 @@
-#pragma once
+#ifndef PLAYER_HPP
+#define PLAYER_HPP
+
 #include <string>
 #include "Board.hpp"
 
-using namespace std;
-
 class Player {
-
 public:
-	Player(string& name, Board& board);
-	void placeShip(bool manual);
+    Player(const std::string& name, Board& board);
+    void placeShip(bool manual);
 
-private: 
-	string name;
-	Board board;
+private:
+    std::string name;
+    Board& board;
 };
+
+#endif // PLAYER_HPP

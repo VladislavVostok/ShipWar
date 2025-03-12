@@ -1,41 +1,41 @@
 #include "Player.hpp"
-#include "Board.cpp"
-#include <string>
+#include <iostream>
+#include <cstdlib> // Для rand()
+#include <ctime>   // Для time()
 
-using namespace std;
+Player::Player(const std::string& name, Board& board) : name(name), board(board) {}
 
-Player::Player(string& name, Board& board) : name(name), board(board) {}
+void Player::placeShip(bool manual) {
+    if (manual) {
+        // Ручное размещение кораблей
+        for (int size : SHIP_SIZES) {
+            board.display(true);
+            int x, y;
+            bool horizontal;
+            std::cout << name << ", размещает корабль размера " << size << " x y horizontal(0/1): ";
+            std::cin >> x >> y >> horizontal;
 
-inline void Player::placeShip(bool manual) {
-	if (manual) {
-		// Ручное размещение кораблей
-		for (int size : SHIP_SIZES) {
-			board.display(true);
-			int x, y;
-			bool horizontal;
-			cout << name << ", размещает корабль размера " << size << " x y horizontal(0/1): ";
-			cin >> x >> y >> horizontal;
+            while (!board.isValidPlacement(x, y, size, horizontal)) {
+                std::cout << "Некорректное размещение. Попробуйте снова: ";
+                std::cin >> x >> y >> horizontal;
+            }
+            board.placeShip(x, y, size, horizontal);
+        }
+    }
+    else {
+        // Автоматическое размещение
+        std::srand(std::time(0)); // Инициализация генератора случайных чисел
+        for (int size : SHIP_SIZES) {
+            int x, y;
+            bool horizontal;
 
-			while (!board.isValidPlacement(x, y, size, horizontal)) {
-				board.placeShip(x, y, size, horizontal);
-			}
-		}
-	}
-	else {
-	// Автоматическое размещение
-		for (int size : SHIP_SIZES) {
-			int x, y;
-			bool horizontal;
+            do {
+                x = std::rand() % SIZE;
+                y = std::rand() % SIZE;
+                horizontal = std::rand() % 2;
+            } while (!board.isValidPlacement(x, y, size, horizontal));
 
-			do {
-				x = rand() % SIZE;
-				y = rand() % SIZE;
-				horizontal = rand() % 2;
-			}
-			while (!board.isValidPlacement(x, y, size, horizontal));
-
-			board.placeShip(x, y, size, horizontal);
-
-		}
-	}
+            board.placeShip(x, y, size, horizontal);
+        }
+    }
 }
