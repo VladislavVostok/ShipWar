@@ -120,6 +120,10 @@ void Player::displayBoard(bool showShips = false) const {
     return board.display(showShips);
 }
 
+Board& Player::getBoard() {
+    return board;
+}
+
 TypePlayer Player::getTypePlaeyr() const {
     return this->typePlayer;
 }

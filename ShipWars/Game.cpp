@@ -23,7 +23,24 @@ void Game::setup() {
 }
 
 void Game::play() {
+	while (true) {
+		for (int i = 0; i < players.size(); ++i) {
+			cout << "Player " << i + 1 << " делает ход:" << endl;
+			players[i].displayBoard(true);
+			players[(i + 1) % players.size()].displayBoard();
+		
+			bool hit = players[i].takeTurn(players[(i + 1) % players.size()].getBoard(), computerMode);
 
+			if (players[(i + 1) % players.size()].hasLost()) {
+				cout << "Player " << i + 1 << "победил" << endl;
+				return;
+			}
+
+			if (hit && mode == HUMAN_VS_COMPUTER && i == 1) {
+				--i;
+			}
+		}
+	}
 }
 
 

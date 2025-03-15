@@ -8,14 +8,10 @@ using namespace std;
 
 const int NUM_SHIP = 10;	// Количество кораблей
 
-
-
-
 // Структура для представления координат на поле.
 struct Point {
 	int x, y;
 };
-
 
 
 int main()
