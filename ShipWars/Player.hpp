@@ -8,16 +8,23 @@
 using namespace std;
 
 enum ComputerMode { RAMDOM, SMART };
+enum TypePlayer { HUMAN, COMPUTER };
+
 
 class Player {
 public:
-    Player(const std::string& name, Board& board);
+    Player(std::string& name, Board& board, TypePlayer typePlayer);
     void placeShip(bool manual);
     bool takeTurn(Board& opponetnBoard, ComputerMode mode);
+    bool hasLost() const;
+    void displayBoard(bool showShips = false) const;
+
+    TypePlayer getTypePlaeyr() const;
 
 private:
     std::string name;
     Board& board;
+    TypePlayer typePlayer;
 };
 
 #endif // PLAYER_HPP

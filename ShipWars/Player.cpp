@@ -5,8 +5,8 @@
 #include <tuple>   // tie(x,y)
 
 
-
-Player::Player(const std::string& name, Board& board) : name(name), board(board) {}
+Player::Player(std::string& name, Board& board, TypePlayer typePlayer) 
+    : name(name), board(board), typePlayer(typePlayer) {}
 
 void Player::placeShip(bool manual) {
     if (manual) {
@@ -43,13 +43,10 @@ void Player::placeShip(bool manual) {
     }
 }
 
-
-
-
 bool Player::takeTurn(Board& opponetnBoard, ComputerMode mode) {
     int x, y;
     static vector<pair<int, int>> targets;
-    if (name == "Computer") {       // Ход компьютера
+    if (this->typePlayer == COMPUTER) {       // Ход компьютера
         if (mode == SMART) {        // Режим Smart стрельбы
             if (!targets.empty()) {
                 tie(x, y) = targets.back();
@@ -85,6 +82,7 @@ bool Player::takeTurn(Board& opponetnBoard, ComputerMode mode) {
         }
     }
 
+    // TODO: Сделать для компа отдельно
     if (opponetnBoard.isShip(x, y)) {
         cout << name << "попал по (" << x << ", " << y << ")!" << endl;
         opponetnBoard.markHit(x, y);
@@ -111,4 +109,17 @@ bool Player::takeTurn(Board& opponetnBoard, ComputerMode mode) {
     }
 
 
+
+}
+
+bool Player::hasLost() const {
+    return board.allShipSunk();
+}
+
+void Player::displayBoard(bool showShips = false) const {
+    return board.display(showShips);
+}
+
+TypePlayer Player::getTypePlaeyr() const {
+    return this->typePlayer;
 }

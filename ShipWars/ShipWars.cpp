@@ -9,8 +9,6 @@ using namespace std;
 const int NUM_SHIP = 10;	// Количество кораблей
 
 
-enum GameMode { HUMAN_VS_COMPUTER, COMPUTER_VS_COMPUTER };
-
 
 
 // Структура для представления координат на поле.
@@ -25,12 +23,14 @@ int main()
 	cout << SIZE;
 
 	string vasya = "Vasya";
-	Board b = Board();
-	Player p = Player(vasya, b);
+	string vasya2 = "Vasya2";
+	Board b1 = Board();
+	Board b2 = Board();
+	Player p1 = Player(vasya, b1, COMPUTER);
+	Player p2 = Player(vasya2, b2, COMPUTER);
 
 	bool f = false;
 	bool t = true;
-	p.placeShip(f);
-	b.display(t);
+
 
 }
