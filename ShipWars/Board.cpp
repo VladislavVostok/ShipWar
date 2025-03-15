@@ -42,7 +42,7 @@ bool Board::isValidPlacement(int x, int y, int size, bool horizontal) const {
 }
 
 bool Board::isHit(int x, int y) const {
-    return grid[x][y] == SHIP;
+    return grid[x][y] == HIT;
 }
 
 

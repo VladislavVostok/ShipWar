@@ -61,7 +61,7 @@ bool Player::takeTurn(Board& opponetnBoard, ComputerMode mode) {
                     y = rand() % SIZE;
                 } while (   opponetnBoard.isHit(x, y)
                             || opponetnBoard.isMiss(x, y)
-                            || (x + y) % 2 != 0
+                            //|| (x + y) % 2 != 0  || (x + y) % 2 != 0             // TODO: Продумать
                   );
 
             }

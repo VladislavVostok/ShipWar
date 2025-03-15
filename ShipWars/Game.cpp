@@ -15,7 +15,7 @@ void Game::setup() {
 	std::srand(std::time_t(0)); // Инициализация генератора случайных чисел
 
 	if ((*players[0]).getTypePlaeyr() == HUMAN) {
-		(*players[0]).placeShip(true);
+		(*players[0]).placeShip(false);
 		(*players[1]).placeShip(false);
 	}
 	else {
@@ -29,7 +29,7 @@ void Game::play() {
 		for (int i = 0; i < players.size(); ++i) {
 			cout << "Player " << i + 1 << " делает ход:" << endl;
 			(*players[i]).displayBoard(true);
-			(*players[(i + 1) % players.size()]).displayBoard(false);
+			(*players[(i + 1) % players.size()]).displayBoard(true);
 		
 			bool hit = (*players[i]).takeTurn((*players[(i + 1) % players.size()]).getBoard(), computerMode);
 
