@@ -2,6 +2,7 @@
 #include <vector>
 #include "Board.hpp"
 #include "Player.hpp"
+#include "Game.hpp"
 
 
 using namespace std;
@@ -15,18 +16,47 @@ struct Point {
 
 
 int main()
-{
-	cout << SIZE;
+{	
+	setlocale(LC_ALL, "");
+	GameMode mode;
+	ComputerMode computerMode;
+	int choice;
+	string Human = "Human";
+	string ChatGPT = "ChatGPT";
+	string DeepSeek = "DeepSeek";
 
-	string vasya = "Vasya";
-	string vasya2 = "Vasya2";
+	Player* p1 = nullptr;
+	Player* p2 = nullptr;
+
 	Board b1 = Board();
 	Board b2 = Board();
-	Player p1 = Player(vasya, b1, COMPUTER);
-	Player p2 = Player(vasya2, b2, COMPUTER);
 
-	bool f = false;
-	bool t = true;
+	cout << "Выберите режим игры (1 - Human vs Computer, 2 - Computer vs Computer): ";
+	cin >> choice;
 
+	mode = (choice == 1) ? HUMAN_VS_COMPUTER : COMPUTER_VS_COMPUTER;
+
+	if (mode == HUMAN_VS_COMPUTER) {
+		cout << "Выберите режим игры компьютера (1 - Random, 2 - Smart): ";
+		cin >> choice;
+
+		p1 = new Player(Human, b1, HUMAN);
+		p2 = new Player(DeepSeek, b2, COMPUTER);
+
+		computerMode = (choice == 1) ? RAMDOM : SMART;
+	}
+	else {
+		computerMode = SMART;
+		p1 = new Player(ChatGPT, b1, COMPUTER);
+		p2 = new Player(DeepSeek, b2, COMPUTER);
+	}
+
+
+
+	Game game = Game(mode, computerMode, p1, p2);
+	game.setup();
+	game.play();
+
+	return 0;
 
 }

@@ -9,6 +9,9 @@ Player::Player(std::string& name, Board& board, TypePlayer typePlayer)
     : name(name), board(board), typePlayer(typePlayer) {}
 
 void Player::placeShip(bool manual) {
+
+    
+
     if (manual) {
         // Ручное размещение кораблей
         for (int size : SHIP_SIZES) {
@@ -27,7 +30,7 @@ void Player::placeShip(bool manual) {
     }
     else {
         // Автоматическое размещение
-        std::srand(std::time(0)); // Инициализация генератора случайных чисел
+        
         for (int size : SHIP_SIZES) {
             int x, y;
             bool horizontal;
@@ -116,7 +119,7 @@ bool Player::hasLost() const {
     return board.allShipSunk();
 }
 
-void Player::displayBoard(bool showShips = false) const {
+void Player::displayBoard(bool showShips) const {
     return board.display(showShips);
 }
 

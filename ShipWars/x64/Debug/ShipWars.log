@@ -1,6 +1,2 @@
 ﻿  ShipWars.cpp
-C:\Users\Студент\Desktop\Владислав Александроич\ShipWar\ShipWars\ShipWars.cpp(6,9): warning C4005: SIZE: изменение макроопределения
-      C:\Users\Студент\Desktop\Владислав Александроич\ShipWar\ShipWars\Board.hpp(18,9):
-      см. предыдущее определение "SIZE"
-  
-  ShipWars.vcxproj -> C:\Users\Студент\Desktop\Владислав Александроич\ShipWar\x64\Debug\ShipWars.exe
+  ShipWars.vcxproj -> C:\Users\Студент\Desktop\Владислав Александрович\ShipWar\x64\Debug\ShipWars.exe

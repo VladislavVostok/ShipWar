@@ -17,7 +17,7 @@ public:
     void placeShip(bool manual);
     bool takeTurn(Board& opponetnBoard, ComputerMode mode);
     bool hasLost() const;
-    void displayBoard(bool showShips = false) const;
+    void displayBoard(bool showShips) const;
     Board& getBoard();
     TypePlayer getTypePlaeyr() const;
 
