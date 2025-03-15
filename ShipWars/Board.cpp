@@ -1,7 +1,5 @@
 #include "Board.hpp"
 
-
-
 Board::Board() {
     grid.resize(SIZE, std::vector<CellState>(SIZE, EMPTY));
 }
